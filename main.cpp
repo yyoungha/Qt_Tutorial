@@ -5,11 +5,13 @@
 
 /*
 Tutorial Topics:
-- QTimer
-- signals and slots (connect function)
+- QGraphicsScene's sceneRect
+- QGraphicsView's sceneRect
 - QObject and Q_OBJECT macro
 */
 
+const int WIDTH = 800;
+const int HEIGHT = 600;
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
@@ -18,15 +20,15 @@ int main(int argc, char *argv[])
     QGraphicsScene *scene = new QGraphicsScene();
 
     // create an item to put into the scene
-    MyRect *rect = new MyRect();
-    rect->setRect(0, 0, 100, 100);
+    MyRect * player = new MyRect();
+    player->setRect(0, 0, 100, 100);
 
     // add the item to the scene
-    scene->addItem(rect);
+    scene->addItem(player);
 
     // make rect item focusable
-    rect->setFlag(QGraphicsItem::ItemIsFocusable);
-    rect->setFocus();
+    player->setFlag(QGraphicsItem::ItemIsFocusable);
+    player->setFocus();
 
     // add a view
     QGraphicsView *view = new QGraphicsView(scene);
@@ -36,6 +38,10 @@ int main(int argc, char *argv[])
 
     // show the view
     view->show();
+    view->setFixedSize(WIDTH, HEIGHT);
+    scene->setSceneRect(0,0,WIDTH,HEIGHT);
+    player->setPos((view->width() - player->rect().width()) / 2   , (view->height() - player->rect().height())/2);
+
 
     return a.exec();
 }

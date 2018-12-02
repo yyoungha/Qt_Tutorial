@@ -1,17 +1,14 @@
 #include <QApplication>
 #include <QGraphicsScene>
-#include <QGraphicsRectItem>
+#include "myrect.h"
 #include <QGraphicsView>
 
 /*
-Prereqs:
-- basic knowledge of C++
-- VERY basic knowledge of Qt
 Tutorial Topics:
-- QgraphicsScene
-- QgraphicsItem
-- QgraphicsView
- */
+- events (keyPressEvent() and QKeyEvent)
+- event propogation system
+- QDebug
+*/
 
 int main(int argc, char *argv[])
 {
@@ -21,14 +18,21 @@ int main(int argc, char *argv[])
     QGraphicsScene *scene = new QGraphicsScene();
 
     // create an item to put into the scene
-    QGraphicsRectItem *rect = new QGraphicsRectItem();
+    MyRect *rect = new MyRect();
     rect->setRect(0, 0, 100, 100);
 
     // add the item to the scene
     scene->addItem(rect);
 
+    // make rect item focusable
+    rect->setFlag(QGraphicsItem::ItemIsFocusable);
+    rect->setFocus();
+
     // add a view
     QGraphicsView *view = new QGraphicsView(scene);
     view->show();
+
     return a.exec();
 }
+
+/* Only one QGraphicsItem can respond to keyboard events at a time */
